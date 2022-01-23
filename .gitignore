@@ -1,12 +1,9 @@
-<<<<<<< HEAD
-=======
 # Directories
 config/
 datasets/
 data/
 runs/
 
->>>>>>> master
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
