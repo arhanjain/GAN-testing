@@ -1,6 +1,6 @@
 from torchaudio import datasets
 from torchvision import transforms
-from models import Generator, Discriminator
+from models.gan import Generator, Discriminator
 from torch.utils.data import DataLoader
 from torch.utils.tensorboard import SummaryWriter
 
@@ -8,7 +8,7 @@ import torchvision.datasets as datasets
 import torchvision
 import torch
 
-if __name__ == "__main__":
+def train_simple_GAN():
     
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
     print('Using device: ', device, '\n')
@@ -25,12 +25,12 @@ if __name__ == "__main__":
 
     fixed_noise = torch.randn((batch_size, noise_dim)).to(device)
 
-    transforms = transforms.Compose([
+    transform = transforms.Compose([
         transforms.ToTensor(),
         transforms.Normalize(mean=(0.1307), std=(0.3081))
     ])
     
-    dataset = datasets.MNIST("./data", train=True, transform=transforms, download=True)
+    dataset = datasets.MNIST("./data", train=True, transform=transform, download=True)
     loader = DataLoader(dataset, batch_size=batch_size, shuffle=True)
 
     optimizer_discriminator = torch.optim.Adam(discriminator.parameters(), lr=lr)
@@ -87,3 +87,7 @@ if __name__ == "__main__":
                     )
 
                     step+=1
+
+if __name__ == "__main__":
+
+    train_simple_GAN()
